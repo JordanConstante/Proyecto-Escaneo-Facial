@@ -1,0 +1,18 @@
+{% csrf_token %}
+<h1>Captura facial</h1>
+<img src="{% url 'video_feed' %}" width="640">
+<br>
+<button id="btn">Capturar rostro</button>
+<p id="msg"></p>
+
+<script>
+document.getElementById("btn").onclick = async () => {
+  const r = await fetch("{% url 'capture' %}", {
+    method: "POST",
+    headers: {"X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value},
+  });
+  const d = await r.json();
+  document.getElementById("msg").textContent =
+    d.ok ? "Guardado: " + d.archivo : d.error;
+};
+</script>
