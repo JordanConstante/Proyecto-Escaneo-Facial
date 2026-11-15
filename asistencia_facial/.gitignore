@@ -1,0 +1,22 @@
+# Entornos virtuales (NO se suben al repositorio)
+venv/
+.venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Django
+.env
+db.sqlite3
+staticfiles/
+media/
+
+# IDE / sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

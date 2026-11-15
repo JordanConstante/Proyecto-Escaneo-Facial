@@ -1,0 +1,41 @@
+{% extends 'attendance/base.html' %}
+{% block title %}Personas{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Personas registradas</h1>
+  <div class="actions">
+    <form method="post" action="{% url 'entrenar' %}">{% csrf_token %}
+      <button class="btn" type="submit">Entrenar modelo</button>
+    </form>
+    <a class="btn btn-ghost" href="{% url 'registro' %}">+ Registrar</a>
+  </div>
+</div>
+<p class="muted">Modelo: <strong class="{% if modelo_listo %}ok{% else %}warn{% endif %}">{% if modelo_listo %}entrenado{% else %}sin entrenar{% endif %}</strong>. Reentrena después de registrar o eliminar personas.</p>
+
+<section class="card">
+  {% if personas %}
+  <table class="table">
+    <thead><tr><th>Nombre</th><th>Código</th><th>Muestras</th><th></th></tr></thead>
+    <tbody>
+    {% for p in personas %}
+      <tr>
+        <td>{{ p.nombres }}</td>
+        <td>{{ p.codigo }}</td>
+        <td>
+          <span class="pill {% if p.n_muestras >= muestras_objetivo %}pill-ok{% else %}pill-warn{% endif %}">{{ p.n_muestras }} / {{ muestras_objetivo }}</span>
+        </td>
+        <td class="row-actions">
+          <a href="{% url 'capturar' p.pk %}">Capturar rostro</a>
+          <form method="post" action="{% url 'eliminar_persona' p.pk %}" onsubmit="return confirm('¿Eliminar a {{ p.nombres|escapejs }}?');">{% csrf_token %}
+            <button class="link-danger" type="submit">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="muted">Aún no hay personas. <a href="{% url 'registro' %}">Registra la primera</a>.</p>
+  {% endif %}
+</section>
+{% endblock %}

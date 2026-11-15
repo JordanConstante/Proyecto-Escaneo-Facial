@@ -1,0 +1,35 @@
+{% extends 'attendance/base.html' %}
+{% block title %}Historial{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Historial de asistencia</h1>
+  <form method="get" class="inline-form">
+    <input type="date" name="fecha" value="{{ fecha|date:'Y-m-d' }}">
+    <button class="btn btn-small" type="submit">Filtrar</button>
+    <a class="btn btn-small btn-ghost" href="{% url 'exportar_csv' %}?fecha={{ fecha|date:'Y-m-d' }}">Exportar CSV</a>
+  </form>
+</div>
+
+<div class="two-col">
+  <section class="card">
+    <div class="card-head"><h2>Presentes ({{ registros|length }})</h2></div>
+    {% if registros %}
+    <table class="table">
+      <thead><tr><th>Persona</th><th>Código</th><th>Hora</th><th>Distancia</th></tr></thead>
+      <tbody>
+      {% for a in registros %}
+        <tr><td>{{ a.persona.nombres }}</td><td>{{ a.persona.codigo }}</td><td>{{ a.hora_registro|time:"H:i:s" }}</td><td>{{ a.confianza|floatformat:1 }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="muted">Sin registros para esta fecha.</p>{% endif %}
+  </section>
+
+  <section class="card">
+    <div class="card-head"><h2>Ausentes ({{ ausentes|length }})</h2></div>
+    {% if ausentes %}
+    <ul class="plain-list">{% for p in ausentes %}<li>{{ p.nombres }} <span class="muted">· {{ p.codigo }}</span></li>{% endfor %}</ul>
+    {% else %}<p class="muted">Nadie ausente.</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

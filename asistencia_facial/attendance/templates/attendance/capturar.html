@@ -1,0 +1,37 @@
+{% extends 'attendance/base.html' %}
+{% load static %}
+{% block title %}Capturar rostro{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Captura de rostro</h1>
+    <p class="muted">Paso 2 de 2 · {{ persona.nombres }} ({{ persona.codigo }})</p>
+  </div>
+</div>
+
+<section class="card video-card">
+  <div class="video-wrap">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="overlay"></canvas>
+    <div id="video-msg" class="video-msg">Presiona «Iniciar cámara»</div>
+  </div>
+  <div class="progress"><div id="bar" class="progress-bar" style="width: 0%"></div></div>
+  <p id="status" class="muted">Muestras guardadas: <strong id="total">{{ existentes }}</strong> / {{ objetivo }}. Mira a la cámara y mueve levemente la cabeza. Se comprobará que el rostro no esté registrado con otra identidad.</p>
+  <div class="actions">
+    <button id="btn-start" class="btn">Iniciar cámara</button>
+    <button id="btn-capture" class="btn" disabled>Capturar {{ objetivo }} muestras</button>
+    <a id="btn-done" class="btn btn-ghost" href="{% url 'personas' %}" hidden>Ir a personas</a>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.CSRF_TOKEN = "{{ csrf_token }}";
+  window.API_MUESTRA = "{% url 'api_muestra' persona.pk %}";
+  window.API_ENTRENAR = "{% url 'entrenar' %}";
+  window.OBJETIVO = {{ objetivo }};
+  window.EXISTENTES = {{ existentes }};
+</script>
+<script src="{% static 'attendance/js/camara.js' %}"></script>
+<script src="{% static 'attendance/js/capturar.js' %}"></script>
+{% endblock %}

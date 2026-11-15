@@ -1,0 +1,31 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FaceAttend{% endblock %} · FaceAttend</title>
+  <link rel="stylesheet" href="{% static 'attendance/css/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{% url 'dashboard' %}"><span class="dot"></span>FaceAttend</a>
+    <nav>
+      <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Inicio</a>
+      <a href="{% url 'en_vivo' %}" class="{% if request.resolver_match.url_name == 'en_vivo' %}active{% endif %}">En vivo</a>
+      <a href="{% url 'personas' %}" class="{% if request.resolver_match.url_name == 'personas' %}active{% endif %}">Personas</a>
+      <a href="{% url 'historial' %}" class="{% if request.resolver_match.url_name == 'historial' %}active{% endif %}">Historial</a>
+      <a href="{% url 'registro' %}" class="btn btn-small">+ Registrar</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">Construcción de Software · UNEMI · Django + OpenCV + PostgreSQL</footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

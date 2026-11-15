@@ -1,0 +1,37 @@
+{% extends 'attendance/base.html' %}
+{% load static %}
+{% block title %}En vivo{% endblock %}
+{% block content %}
+<h1>Reconocimiento en vivo</h1>
+{% if not modelo_listo %}
+<div class="alert alert-warning">El modelo aún no está entrenado: solo se detectarán rostros. Registra personas y entrena el modelo desde <a href="{% url 'personas' %}">Personas</a>.</div>
+{% endif %}
+
+<div class="live-grid">
+  <section class="card video-card">
+    <div class="video-wrap">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+      <div id="video-msg" class="video-msg">Abriendo la cámara automáticamente… acepta el permiso del navegador si aparece</div>
+    </div>
+    <div class="actions">
+      <button id="btn-start" class="btn" hidden>Reintentar cámara</button>
+      <button id="btn-stop" class="btn btn-ghost" disabled>Detener</button>
+      <span id="fps" class="pill">0 FPS</span>
+    </div>
+  </section>
+
+  <aside class="card side">
+    <h2>Personas en cámara</h2>
+    <div class="counter"><span id="count">0</span><small>rostros detectados</small></div>
+    <ul id="detections" class="detections"><li class="muted">Sin detecciones</li></ul>
+    <h3>Eventos</h3>
+    <ul id="events" class="events"><li class="muted">Aún no hay eventos</li></ul>
+  </aside>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>window.CSRF_TOKEN = "{{ csrf_token }}"; window.API_FRAME = "{% url 'api_frame' %}";</script>
+<script src="{% static 'attendance/js/camara.js' %}"></script>
+<script src="{% static 'attendance/js/en_vivo.js' %}"></script>
+{% endblock %}

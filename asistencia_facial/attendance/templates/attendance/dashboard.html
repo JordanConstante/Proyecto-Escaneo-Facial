@@ -1,0 +1,40 @@
+{% extends 'attendance/base.html' %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Control de asistencia por reconocimiento facial</h1>
+    <p>Detecta y reconoce rostros en tiempo real con OpenCV y registra la asistencia automáticamente.</p>
+    <div class="actions">
+      <a class="btn" href="{% url 'en_vivo' %}">Iniciar reconocimiento</a>
+      <a class="btn btn-ghost" href="{% url 'registro' %}">Registrar persona</a>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="card stat"><span class="stat-n">{{ total_personas }}</span><span class="stat-l">Personas registradas</span></div>
+  <div class="card stat"><span class="stat-n accent">{{ presentes_hoy }}</span><span class="stat-l">Presentes hoy</span></div>
+  <div class="card stat"><span class="stat-n">{{ total_muestras }}</span><span class="stat-l">Muestras de rostro</span></div>
+  <div class="card stat">
+    <span class="stat-n {% if modelo_listo %}ok{% else %}warn{% endif %}">{% if modelo_listo %}Listo{% else %}Pendiente{% endif %}</span>
+    <span class="stat-l">Modelo de reconocimiento</span>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-head"><h2>Últimas asistencias de hoy</h2><a href="{% url 'historial' %}">Ver historial</a></div>
+  {% if asistencias_hoy %}
+  <table class="table">
+    <thead><tr><th>Persona</th><th>Código</th><th>Hora</th></tr></thead>
+    <tbody>
+      {% for a in asistencias_hoy %}
+      <tr><td>{{ a.persona.nombres }}</td><td>{{ a.persona.codigo }}</td><td>{{ a.hora_registro|time:"H:i:s" }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="muted">Todavía no hay asistencias registradas hoy.</p>
+  {% endif %}
+</section>
+{% endblock %}

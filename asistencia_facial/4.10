@@ -1,0 +1,10 @@
+Collecting opencv-contrib-python
+  Downloading opencv_contrib_python-5.0.0.93-cp37-abi3-win_amd64.whl.metadata (20 kB)
+Collecting numpy>=2 (from opencv-contrib-python)
+  Using cached numpy-2.5.4-cp313-cp313-win_amd64.whl.metadata (6.6 kB)
+Downloading opencv_contrib_python-5.0.0.93-cp37-abi3-win_amd64.whl (53.8 MB)
+   ---------------------------------------- 53.8/53.8 MB 3.1 MB/s  0:00:17
+Using cached numpy-2.5.4-cp313-cp313-win_amd64.whl (12.6 MB)
+Installing collected packages: numpy, opencv-contrib-python
+
+Successfully installed numpy-2.5.4 opencv-contrib-python-5.0.0.93
