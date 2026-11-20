@@ -1,0 +1,43 @@
+(env) C:\Proyecto-Escaneo-Facial-main\asistencia_facial> python manage.py test attendance -v 2
+
+Found 18 test(s).
+Creating test database for alias 'default' ('test_db')...
+Operations to perform:
+  Synchronize unmigrated apps: ...
+  Apply all migrations: admin, auth, attendance, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying attendance.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+System check identified no issues (0 silenced).
+
+test_decode_data_url_roundtrip ... ok
+test_decode_invalid_raises ... ok
+test_blank_frame_has_no_faces ... ok
+test_detects_real_face ... ok
+test_train_and_recognize ... ok
+test_api_frame_blank ... ok
+test_api_frame_invalid_image ... ok
+test_api_frame_requires_post ... ok
+test_delete_person ... ok
+test_duplicate_code_rejected ... ok
+test_full_flow_enroll_train_recognize ... ok
+test_history_and_csv ... ok
+test_home_is_live_camera_page ... ok
+test_pages_render ... ok
+test_register_person_redirects_to_capture ... ok
+test_sample_without_face_is_not_saved ... ok
+test_train_without_samples ... ok
+test_validation_invalid_person_data ... ok
+test_attendance_record_timestamp ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 4.126s
+
+OK
+Destroying test database for alias 'default' ('test_db')...
+
+(env) C:\Proyecto-Escaneo-Facial-main\asistencia_facial>
